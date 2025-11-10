@@ -135,14 +135,7 @@ def formater_le_jeu(état):
 #________________________________________sélectionner_un_coup________________________________________
 
 def sélectionner_un_coup():
-    """Sélectionner un coup
-
-    Returns:
-        tuple: Un tuple composé d'un type de coup et de la position.
-               Le type de coup est une chaîne de caractères.
-               La position est une liste de 2 entiers [x, y].
-    Examples:
-        Quel coup voulez-vous jouer? ('D', 'MH', 'MV') : D
-        Donnez la position du coup à jouer ('x, y') : 2, 6
-    """
-    pass
+    
+    coup = input("Quel coup voulez-vous jouer? ('D', 'MH', 'MV') : ")
+    x, y = input("Donnez la position du coup à jouer ('x, y') : ").split(',')
+    return coup, [int(x), int(y)]
