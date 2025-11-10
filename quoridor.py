@@ -85,17 +85,52 @@ def formater_le_damier(joueurs, murs):
 #________________________________________formater_le_jeu________________________________________
 
 def formater_le_jeu(état):
-    """Formater la représentation graphique d'un jeu.
+    # Récupérer les informations de base
+    joueurs = état["joueurs"]
+    murs_h = état["murs"]["horizontaux"]
+    murs_v = état["murs"]["verticaux"]
 
-    Doit faire usage des fonctions formater_entête et formater_le_damier.
+    # Construire la légende
+    res = "Légende:\n"
+    res += f"   1={joueurs[0]['nom']},  murs={'|' * joueurs[0]['murs']}\n"
+    res += f"   2={joueurs[1]['nom']}, murs={'|' * joueurs[1]['murs']}\n"
+    res += "   -----------------------------------\n"
 
-    Args:
-        état (dict): Dictionnaire représentant l'état du jeu.
+    # Grille vide initiale : 9x9
+    grille = [["." for _ in range(9)] for _ in range(9)]
 
-    Returns:
-        str: Chaîne de caractères représentant le jeu.
-    """
-    pass
+    # Placer les joueurs
+    for i, j in enumerate(joueurs, start=1):
+        x, y = j["position"]
+        grille[9 - y][x - 1] = str(i)
+
+    # Construire les lignes du damier
+    lignes = []
+    for y in range(9, 0, -1):
+        # Ligne de points
+        ligne = f"{y} | " + "   ".join(grille[9 - y]) + " |\n"
+        lignes.append(ligne)
+
+        # Ligne d'espacement ou de murs horizontaux
+        if y > 1:
+            sep = "  |"
+            for x in range(1, 10):
+                # Mur horizontal
+                if [x, y - 1] in murs_h:
+                    sep += "-------"
+                else:
+                    sep += "   "
+                # Mur vertical
+                if [x, y - 1] in murs_v:
+                    sep = sep[:-3] + "|"
+            sep += "\n"
+            lignes.append(sep)
+
+    # Ligne du bas
+    lignes.append("--|-----------------------------------\n")
+    lignes.append("  | 1   2   3   4   5   6   7   8   9")
+
+    return res + "".join(lignes)
 
 #________________________________________sélectionner_un_coup________________________________________
 
