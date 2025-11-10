@@ -45,16 +45,42 @@ def formater_entête(joueurs):
 #________________________________________formater_le_damier________________________________________
 
 def formater_le_damier(joueurs, murs):
-    """Formater la représentation graphique du damier.
+    murs_h = murs["horizontaux"]
+    murs_v = murs["verticaux"]
 
-    Args:
-        joueurs (list): Liste de dictionnaires représentant les joueurs.
-        murs (dict): Dictionnaire représentant l'emplacement des murs.
+    # Entête du damier
+    damier = "   -----------------------------------\n"
 
-    Returns:
-        str: Chaîne de caractères représentant le damier.
-    """
-    pass
+    # Création de la grille de base
+    grille = [["." for _ in range(9)] for _ in range(9)]
+
+    # Placement des joueurs
+    for i, joueur in enumerate(joueurs, start=1):
+        x, y = joueur["position"]
+        grille[9 - y][x - 1] = str(i)
+
+    # Construction du damier ligne par ligne
+    for y in range(9, 0, -1):
+        # Ligne avec les points (joueurs inclus)
+        damier += f"{y} | " + "   ".join(grille[9 - y]) + " |\n"
+
+        # Ligne avec les murs horizontaux ou verticaux
+        if y > 1:
+            ligne_mur = "  |"
+            for x in range(1, 10):
+                # Mur horizontal
+                ligne_mur += "-------" if [x, y - 1] in murs_h else "   "
+                # Mur vertical
+                if [x, y - 1] in murs_v:
+                    ligne_mur = ligne_mur[:-3] + "|"
+            ligne_mur += "\n"
+            damier += ligne_mur
+
+    # Pied du damier
+    damier += "--|-----------------------------------\n"
+    damier += "  | 1   2   3   4   5   6   7   8   9"
+
+    return damier
 
 #________________________________________formater_le_jeu________________________________________
 
