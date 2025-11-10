@@ -2,6 +2,7 @@
 
 import argparse
 
+
 def interpréter_la_ligne_de_commande():
     """Génère un interpréteur de ligne de commande.
 
@@ -26,15 +27,20 @@ def interpréter_la_ligne_de_commande():
 #________________________________________formater_entête________________________________________
 
 def formater_entête(joueurs):
-    """Formater la représentation graphique de la légende.
+    # Trouver la longueur maximale du nom pour aligner "murs="
+    longueur_max_nom = max(len(joueur["nom"]) for joueur in joueurs)
 
-    Args:
-        joueurs (list): Liste de dictionnaires représentant les joueurs.
+    # Construire la légende ligne par ligne
+    lignes = ["Légende:"]
+    for i, joueur in enumerate(joueurs, start=1):
+        nom = joueur["nom"]
+        murs = "|" * joueur["murs"]
+        # Ajuster les espaces pour aligner le mot "murs"
+        espaces = " " * (longueur_max_nom - len(nom))
+        lignes.append(f"   {i}={nom},{espaces} murs={murs}")
 
-    Returns:
-        str: Chaîne de caractères représentant la légende.
-    """
-    pass
+    # Joindre toutes les lignes avec des retours à la ligne
+    return "\n".join(lignes)
 
 #________________________________________formater_le_damier________________________________________
 
