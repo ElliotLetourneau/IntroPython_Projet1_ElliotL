@@ -1,8 +1,3 @@
-"""Jeu Quoridor
-
-Ce programme permet de joueur au jeu Quoridor.
-"""
-
 from api import appliquer_un_coup, créer_une_partie, récupérer_une_partie
 from quoridor import (
     formater_le_jeu,

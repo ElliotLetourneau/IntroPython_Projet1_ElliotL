@@ -4,12 +4,6 @@ import argparse
 
 
 def interpréter_la_ligne_de_commande():
-    """Génère un interpréteur de ligne de commande.
-
-    Returns:
-        Namespace: Un objet Namespace tel que retourné par parser.parse_args().
-                   Cet objet aura l'attribut «idul» représentant l'idul du joueur.
-    """
     # Création du parseur avec une description
     parser = argparse.ArgumentParser(
         description="Quoridor"
