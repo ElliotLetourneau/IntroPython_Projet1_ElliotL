@@ -1,10 +1,26 @@
-#________________________________________interpréter_la_ligne_de_commande________________________________________
+"""Module Quoridor
+
+Functions:
+    * interpréter_la_ligne_de_commande - Génère un interpréteur de commande.
+    * formater_entête - Formater la représentation graphique du damier.
+    * formater_le_damier - Formater la représentation graphique de la légende.
+    * formater_le_jeu - Formater la représentation graphique d'un jeu.
+    * sélectionner_un_coup - Demander le prochain coup à jouer au joueur.
+"""
 
 import argparse
 
 
+#________________________________________interpréter_la_ligne_de_commande________________________________________
+
 def interpréter_la_ligne_de_commande():
-    # Création du parseur avec une description
+    """Génère un interpréteur de commande.
+
+    Returns:
+        Namespace: Un objet Namespace tel que retourné par parser.parse_args().
+                   Cette objet aura l'attribut «idul» représentant l'idul du joueur.
+    """
+    # Création du parser avec une description
     parser = argparse.ArgumentParser(
         description="Quoridor"
     )
@@ -21,6 +37,14 @@ def interpréter_la_ligne_de_commande():
 #________________________________________formater_entête________________________________________
 
 def formater_entête(joueurs):
+    """Formater la représentation graphique de la légende.
+
+    Args:
+        joueurs (list): Liste de dictionnaires représentant les joueurs.
+
+    Returns:
+        str: Chaîne de caractères représentant la légende.
+    """
     # Trouver la longueur maximale du nom pour aligner "murs="
     longueur_max_nom = max(len(joueur["nom"]) for joueur in joueurs)
 
@@ -39,6 +63,15 @@ def formater_entête(joueurs):
 #________________________________________formater_le_damier________________________________________
 
 def formater_le_damier(joueurs, murs):
+    """Formater la représentation graphique du damier.
+
+    Args:
+        joueurs (list): Liste de dictionnaires représentant les joueurs.
+        murs (dict): Dictionnaire représentant l'emplacement des murs.
+
+    Returns:
+        str: Chaîne de caractères représentant le damier.
+    """
     murs_h = murs["horizontaux"]
     murs_v = murs["verticaux"]
 
@@ -79,6 +112,16 @@ def formater_le_damier(joueurs, murs):
 #________________________________________formater_le_jeu________________________________________
 
 def formater_le_jeu(état):
+    """Formater la représentation graphique d'un jeu.
+
+    Doit faire usage des fonctions formater_entête et formater_le_damier.
+
+    Args:
+        état (dict): Dictionnaire représentant l'état du jeu.
+
+    Returns:
+        str: Chaîne de caractères représentant le jeu.
+    """
     # Récupérer les informations de base
     joueurs = état["joueurs"]
     murs_h = état["murs"]["horizontaux"]
@@ -129,7 +172,17 @@ def formater_le_jeu(état):
 #________________________________________sélectionner_un_coup________________________________________
 
 def sélectionner_un_coup():
-    
+    """Sélectionner un coup
+
+    Returns:
+        tuple: Un tuple composé d'un type de coup et de la position.
+               Le type de coup est une chaîne de caractères.
+               La position est une liste de 2 entiers [x, y].
+    Examples:
+        Quel coup voulez-vous jouer? ('D', 'MH', 'MV') : D
+        Donnez la position du coup à jouer ('x, y') : 2, 6
+    """
+
     coup = input("Quel coup voulez-vous jouer? ('D', 'MH', 'MV') : ")
     x, y = input("Donnez la position du coup à jouer ('x, y') : ").split(',')
     return coup, [int(x), int(y)]
